@@ -8,6 +8,7 @@ HEADER_SIZE = 28
 def binsearch(lower, upper, predicate):
     while lower <= upper:
         mid = (lower + upper) // 2
+        print(mid)
         if predicate(mid):
             lower = mid + 1
         else:
@@ -26,13 +27,13 @@ def is_mtu_suitable(mtu, dst):
     except icmplib.exceptions.DestinationUnreachable:
         raise RuntimeError('Host is unreachable!')
     
-    return not result.is_alive
+    return result.is_alive
 
 
 @click.command()
 @click.option("-l", "--min", default=68, required=True)
 @click.option('-h', "--max", default=1500, required=True)
-@click.option('-d', "--dst", required=True)
+@click.option('-d', "--dst", default='google.com', required=True)
 def main(min, max, dst):
     try:
         def predicate(mtu):
